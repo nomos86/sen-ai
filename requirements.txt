@@ -1,2 +1,2 @@
-gradio
-openai
+flask
+requests

@@ -1,7 +1,2 @@
-# Sen-AI
-Senli-benli, tensel, erotik hikaye yazan özel AI uygulaması.
-
-## Özellikler
-- Şifre korumalı giriş
-- OpenRouter destekli
-- iOS uyumlu
+# Senli-Benli Hikaye AI
+Bu uygulama OpenRouter API ile çalışan bir hikaye yazma yapay zekasıdır.

@@ -1,28 +1,30 @@
-import gradio as gr
-import openai
+
+from flask import Flask, request, jsonify
 import os
+import requests
 
-def sohbet(sifre, mesaj):
-    if sifre != "icselhuzur2215":
-        return "Şifre hatalı.", ""
-    openai.api_key = os.getenv("OPENROUTER_API_KEY")
-    try:
-        yanit = openai.ChatCompletion.create(
-            model="openai/gpt-4o",
-            messages=[
-                {"role": "system", "content": "Senli-benli, tensel, erotik bir anlatım tarzı benimse."},
-                {"role": "user", "content": mesaj}
-            ]
-        )
-        return yanit['choices'][0]['message']['content'], ""
-    except Exception as e:
-        return f"Hata: {e}", ""
+app = Flask(__name__)
 
-with gr.Blocks() as demo:
-    sifre = gr.Textbox(label="Şifre", type="password")
-    mesaj = gr.Textbox(label="Yönlendirme (örnek: boynumdan yavaşça öpüyorsun...)")
-    cikti = gr.Textbox(label="Yanıt")
-    btn = gr.Button("Gönder")
-    btn.click(sohbet, inputs=[sifre, mesaj], outputs=[cikti, mesaj])
+API_KEY = os.environ.get("OPENROUTER_API_KEY")
 
-demo.launch()
+@app.route("/")
+def index():
+    return "Senli-Benli Hikaye AI uygulaması çalışıyor."
+
+@app.route("/chat", methods=["POST"])
+def chat():
+    user_input = request.json.get("prompt", "")
+    headers = {
+        "Authorization": f"Bearer {API_KEY}",
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "model": "openrouter/gpt-4",
+        "messages": [{"role": "user", "content": user_input}]
+    }
+    response = requests.post("https://openrouter.ai/api/v1/chat/completions", json=payload, headers=headers)
+    return jsonify(response.json())
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 10000))
+    app.run(host="0.0.0.0", port=port)
