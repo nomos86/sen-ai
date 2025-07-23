@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Giriş</title>
+</head>
+<body>
+    <h2>Senli-Benli AI Giriş</h2>
+    {% if error %}
+    <p style="color:red;">Şifre yanlış</p>
+    {% endif %}
+    <form method="post">
+        <input type="password" name="password" placeholder="Şifre" required />
+        <button type="submit">Giriş</button>
+    </form>
+</body>
+</html>

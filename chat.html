@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Senli-Benli Hikaye</title>
+</head>
+<body>
+    <h2>Senli-Benli Hikaye AI</h2>
+    <form method="post">
+        <textarea name="user_input" rows="4" cols="50" placeholder="Sen yaz, o devam etsin..." required></textarea><br>
+        <button type="submit">Gönder</button>
+    </form>
+    {% if ai_response %}
+    <hr>
+    <h4>Senin Girdin:</h4>
+    <p>{{ user_input }}</p>
+    <h4>Hikaye Devamı:</h4>
+    <p>{{ ai_response }}</p>
+    {% endif %}
+</body>
+</html>
